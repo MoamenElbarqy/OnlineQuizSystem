@@ -14,11 +14,11 @@ public class AdminLoginHandler(AdminService adminService, ITokenProvider tokenPr
     {
         return role == Role.Admin;
     }
-    public async Task<TokenResponse?> HandleLoginAsync(UserLoginRequest request)
+    public async Task<UserTokenResponse?> HandleLoginAsync(UserLoginRequest request)
     {
         var admin = adminService.IsExsisted(request);
 
-        if(admin is null)
+        if (admin is null)
             return null;
 
         var gnerateTokenRequest = new GenerateTokenRequest
@@ -26,9 +26,9 @@ public class AdminLoginHandler(AdminService adminService, ITokenProvider tokenPr
             Id = admin.Id,
             Role = admin.Role
         };
-        
-        var tokenResponse = tokenProvider.GenerateToken(gnerateTokenRequest);
 
+        var tokenResponse = tokenProvider.GenerateToken(gnerateTokenRequest);
+        
         return tokenResponse;
     }
 }

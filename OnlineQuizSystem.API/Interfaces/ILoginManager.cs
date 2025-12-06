@@ -1,9 +1,9 @@
-using OnlineQuizSystem.API.Response;
 using OnlineQuizSystem.Business.Requests;
+using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Business.Interfaces;
 
 public interface ILoginManager
 {
-    public Task<TokenResponse?> ProcessLoginAsync(UserLoginRequest request);
+    public Task<User?> CheckCredentialsAsync(UserLoginRequest request);
 }

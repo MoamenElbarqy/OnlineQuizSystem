@@ -22,6 +22,7 @@ builder.Services.AddAuthentication(options =>
     
     options.TokenValidationParameters = new()
     {
+        ClockSkew = TimeSpan.Zero,
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
@@ -32,6 +33,8 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!)
         )
+
+        
     };
 });
 var app = builder.Build();

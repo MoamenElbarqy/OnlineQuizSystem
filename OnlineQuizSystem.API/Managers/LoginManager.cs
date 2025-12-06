@@ -6,31 +6,32 @@ using OnlineQuizSystem.API.Response;
 using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Requests;
 using OnlineQuizSystem.Business.Services;
+using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Business.Managers;
 
-class LoginManager:ILoginManager
+class LoginManager : ILoginManager
 {
     private readonly List<ILoginHandler> _handlers;
 
 
-    public LoginManager(ITokenProvider tokenProvider,
+    public LoginManager(
                         StudentService studentService,
                         InstructorService instructorService,
                         AdminService AdminService)
     {
         _handlers = new List<ILoginHandler>
         {
-            new StudentLoginHandler(studentService, tokenProvider),
-            new InstructorLoginHandler(instructorService, tokenProvider),
-            new AdminLoginHandler(AdminService, tokenProvider)
-        };    
+            new StudentLoginHandler(studentService),
+            new InstructorLoginHandler(instructorService),
+            new AdminLoginHandler(AdminService)
+        };
     }
-    public async Task<TokenResponse?> ProcessLoginAsync(UserLoginRequest request)
+    public async Task<User?> ProcessLoginAsync(UserLoginRequest request)
     {
         var handler = _handlers.FirstOrDefault(h => h.CanHanlde(request.Role));
 
-        if(handler is null)
+        if (handler is null)
             return null;
 
         return await handler.HandleLoginAsync(request);

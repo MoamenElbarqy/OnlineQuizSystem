@@ -7,18 +7,18 @@ using OnlineQuizSystem.Data.Enums;
 
 namespace OnlineQuizSystem.API.LoginHandlers;
 
-public class StudentLoginHandler(StudentService studentService, ITokenProvider tokenProvider) : ILoginHandler
+public class StudentLoginHandler(StudentService studentService) : ILoginHandler
 {
     public bool CanHanlde(Role role)
     {
         return role == Role.Student;
     }
 
-    public async Task<TokenResponse?> HandleLoginAsync(UserLoginRequest request)
+    public async Task<UserTokenResponse?> HandleLoginAsync(UserLoginRequest request)
     {
         var student = studentService.IsExsisted(request);
 
-        if(student is null)
+        if (student is null)
             return null;
 
         var gnerateTokenRequest = new GenerateTokenRequest
@@ -26,7 +26,7 @@ public class StudentLoginHandler(StudentService studentService, ITokenProvider t
             Id = student.Id,
             Role = student.Role
         };
-        
+
         var tokenResponse = tokenProvider.GenerateToken(gnerateTokenRequest);
 
         return tokenResponse;

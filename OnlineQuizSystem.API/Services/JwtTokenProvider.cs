@@ -7,7 +7,7 @@ using OnlineQuizSystem.API.Response;
 
 namespace OnlineQuizSystem.API.Services;
 
-public class JwtTokenProvider: ITokenProvider
+public class JwtTokenProvider : ITokenProvider
 {
     private readonly IConfiguration _configuration;
     public JwtTokenProvider(IConfiguration configuration)
@@ -15,16 +15,16 @@ public class JwtTokenProvider: ITokenProvider
         _configuration = configuration;
     }
 
-    public TokenResponse GenerateToken(GenerateTokenRequest generateTokenRequest)
+    public UserTokenResponse GenerateToken(GenerateTokenRequest generateTokenRequest)
     {
-        
+
         var jwtSettings = _configuration.GetSection("JwtSettings");
 
         var issuer = jwtSettings["Issuer"]!;
         var audience = jwtSettings["Audience"]!;
         var expires = DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["TokenExpirationInMinutes"]!));
         var key = jwtSettings["SecretKey"]!;
-        
+
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, generateTokenRequest.Id.ToString()),
@@ -43,17 +43,17 @@ public class JwtTokenProvider: ITokenProvider
         };
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.CreateToken(descriptor);
-        
-        return new TokenResponse
+
+        return new UserTokenResponse
         {
             AceessToken = tokenHandler.WriteToken(securityToken),
             RefreshToken = "7a6f23b4e1d04c9a8f5b6d7c8a9e01f1",
             ExpiresIn = expires
         };
-        
+
     }
 
-    public TokenResponse RefreshToken(RefreshTokenRequest refreshTokenRequest)
+    public UserTokenResponse RefreshToken(RefreshTokenRequest refreshTokenRequest)
     {
         throw new NotImplementedException();
     }

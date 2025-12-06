@@ -15,17 +15,24 @@ public class AuthController : ControllerBase
     {
         _LoginManager = LoginManager;
     }
-    
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(UserLoginRequest request)
     {
-        TokenResponse? response  = await _LoginManager.ProcessLoginAsync(request);
+        var user = await _LoginManager.CheckCredentialsAsync(request);
 
-        if(response is null)
+        if (user is null)
             return BadRequest("Invalid Data");
 
+        var authModel = new Models.AuthModel
+        {
+            AccessToken = response.AceessToken,
+            Username = response.Username,
+            UserEmail = response.UserEmail,
+            role = response.Role
+        };
         return Ok(response);
     }
-    
+
 
 }
