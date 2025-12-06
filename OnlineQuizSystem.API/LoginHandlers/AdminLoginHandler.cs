@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OnlineQuizSystem.API.Interfaces;
 using OnlineQuizSystem.API.Response;
+using OnlineQuizSystem.API.Services;
 using OnlineQuizSystem.Business.Requests;
 using OnlineQuizSystem.Business.Services;
 using OnlineQuizSystem.Data.Enums;
@@ -13,8 +14,21 @@ public class AdminLoginHandler(AdminService adminService, ITokenProvider tokenPr
     {
         return role == Role.Admin;
     }
-    public Task<TokenResponse?> HandleLoginAsync(UserLoginRequest request)
+    public async Task<TokenResponse?> HandleLoginAsync(UserLoginRequest request)
     {
-        throw new NotImplementedException();
+        var admin = adminService.IsExsisted(request);
+
+        if(admin is null)
+            return null;
+
+        var gnerateTokenRequest = new GenerateTokenRequest
+        {
+            Id = admin.Id,
+            Role = admin.Role
+        };
+        
+        var tokenResponse = tokenProvider.GenerateToken(gnerateTokenRequest);
+
+        return tokenResponse;
     }
 }

@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using OnlineQuizSystem.API.LoginHandlers;
 using OnlineQuizSystem.API.Response;
+using OnlineQuizSystem.API.Services;
 using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.API.Controllers;
 
@@ -27,5 +26,6 @@ public class AuthController : ControllerBase
 
         return Ok(response);
     }
+    
 
 }

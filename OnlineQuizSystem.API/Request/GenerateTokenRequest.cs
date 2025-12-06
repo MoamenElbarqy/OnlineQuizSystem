@@ -1,4 +1,4 @@
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Data.Enums;
 
 namespace OnlineQuizSystem.API.Services;
 

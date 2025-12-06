@@ -14,7 +14,7 @@ public class InstructorLoginHandler(InstructorService instructorService,
     {
         return role == Role.Instructor;
     }
-    public Task<TokenResponse?> HandleLoginAsync(UserLoginRequest request)
+    public async Task<TokenResponse?> HandleLoginAsync(UserLoginRequest request)
     {
         var instructor = instructorService.IsExsisted(request);
 
