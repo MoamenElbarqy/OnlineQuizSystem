@@ -5,6 +5,6 @@ namespace OnlineQuizSystem.API.Interfaces;
 
 public interface ITokenProvider
 {
-    public TokenResponse GenerateToken(GenerateTokenRequest generateTokenRequest);
-    public TokenResponse RefreshToken(string refreshToken);
+    public  Task<TokenResponse?> GenerateTokenAsync(GenerateTokenRequest generateTokenRequest);
+    public  Task<TokenResponse?> RefreshTokenAsync(string refreshToken);
 }

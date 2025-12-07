@@ -1,23 +1,30 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using OnlineQuizSystem.API.Interfaces;
+using OnlineQuizSystem.API.Response;
+using OnlineQuizSystem.Data;
+using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.API.Services;
 
 public class JwtTokenProvider : ITokenProvider
 {
+    private readonly AppDbContext _context;
     private readonly IConfiguration _configuration;
-    public JwtTokenProvider(IConfiguration configuration)
+    public JwtTokenProvider(IConfiguration configuration, AppDbContext context)
     {
         _configuration = configuration;
+        _context = context;
     }
 
-    public TokenResponse GenerateToken(GenerateTokenRequest generateTokenRequest)
+    public  async Task<TokenResponse?> GenerateTokenAsync(GenerateTokenRequest generateTokenRequest)
     {
-
+        
         var jwtSettings = _configuration.GetSection("JwtSettings");
 
         var issuer = jwtSettings["Issuer"]!;
@@ -44,17 +51,56 @@ public class JwtTokenProvider : ITokenProvider
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.CreateToken(descriptor);
 
+        string refreshToken = GenerateRefreshToken();
+
+
+        RefreshToken refreshTokenModel = new RefreshToken
+        {
+            UserId = generateTokenRequest.Id,
+            Token = refreshToken,
+            CreatedAt = DateTime.UtcNow,
+            ExpiresAt = DateTime.UtcNow.AddDays(7)
+        };
+
+        await _context.RefreshTokens.AddAsync(refreshTokenModel);
+        await _context.SaveChangesAsync();
+
         return new TokenResponse
         {
-            AceessToken = tokenHandler.WriteToken(securityToken),
-            RefreshToken = "7a6f23b4e1d04c9a8f5b6d7c8a9e01f1",
+            AccessToken = tokenHandler.WriteToken(securityToken),
+            RefreshToken = refreshTokenModel,
             ExpiresIn = expires
         };
 
     }
-
-    public TokenResponse RefreshToken(string refreshToken)
+    public string GenerateRefreshToken()
     {
-        
+        var randomNumber = new byte[64];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
     }
+    public async Task<TokenResponse?> RefreshTokenAsync(string refreshToken)
+    {
+        if(string.IsNullOrEmpty(refreshToken))
+            return null;
+        
+        var existingToken = await _context.RefreshTokens.Include(rt => rt.User)
+            .FirstOrDefaultAsync(rt => rt.Token == refreshToken && rt.IsActive);
+
+        if (existingToken is null)
+            return null;
+
+        existingToken.RevokedAt = DateTime.UtcNow;
+        _context.RefreshTokens.Update(existingToken);
+        await _context.SaveChangesAsync();
+
+        return await GenerateTokenAsync (new GenerateTokenRequest
+        {
+            Id = existingToken.UserId,
+            Role = existingToken.User.Role
+        });
+    }
+
+
 }

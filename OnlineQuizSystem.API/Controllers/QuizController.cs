@@ -10,7 +10,7 @@ namespace OnlineQuizSystem.API.Controllers;
 [Authorize]
 public class QuizController : ControllerBase
 {
-    /*private readonly IQuizService _quizService;
+    /* private readonly IQuizService _quizService;
     
     public QuizController(IQuizService quizService)
     {
@@ -26,6 +26,6 @@ public class QuizController : ControllerBase
     public IActionResult GetAll()
     {
         
-    }*/
+    } */
 }
 

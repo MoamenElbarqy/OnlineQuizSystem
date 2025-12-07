@@ -3,7 +3,7 @@ using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Business.Interfaces;
 
-public interface ILoginManager
+public interface IAuthenticationService
 {
-    public Task<User?> CheckUserCredentialsAsync(UserLoginRequest request);
+    public Task<User?> AuthenticateAsync(UserLoginRequest request);
 }

@@ -5,17 +5,17 @@ using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Business.Managers;
 
-class LoginManager : ILoginManager
+class AuthenticationService : IAuthenticationService
 {
     private readonly AdminService _adminService;
-    LoginManager(AdminService adminService)
+    AuthenticationService(AdminService adminService)
     {
         _adminService = adminService;
-    }   
-    public async Task<User?> CheckUserCredentialsAsync(UserLoginRequest request)
+    }
+    public async Task<User?> AuthenticateAsync(UserLoginRequest request)
     {
         var admin = await _adminService.IsExisted(request);
-        
+
         return null;
     }
 }

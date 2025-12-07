@@ -8,7 +8,7 @@ public class StudentQuiz
     
     public Student Student { get; set; }
     public Quiz Quiz { get; set; }
-     
+    
     public List<StudentQuestion> SolvedQuestions { get; set; } = new();
     public DateTime StartedAt { get; set; }
     public DateTime? SubmittedAt { get; set; }

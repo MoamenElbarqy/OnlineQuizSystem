@@ -5,7 +5,7 @@ namespace OnlineQuizSystem.API.Response;
 
 public class TokenResponse
 {
-    public string AceessToken { get; set; }
+    public string AccessToken { get; set; }
     public RefreshToken RefreshToken { get; set; }
     public DateTime ExpiresIn { get; set; }
 }
