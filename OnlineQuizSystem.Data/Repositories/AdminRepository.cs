@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Data.Repositories;
@@ -12,12 +14,12 @@ public class AdminRepository(AppDbContext context)
         return admin;
         
     }
-    public Admin? Find(string email, string password)
+    public async Task<Admin?> Find(string email, string password)
     {
         var admin = context.Admins
-            .FirstOrDefault(a => a.Email == email && a.Password == password);  
+            .FirstOrDefaultAsync(a => a.Email == email && a.Password == password);  
 
-        return admin;
+        return await admin;
     }
 
     public bool Add(Admin admin)

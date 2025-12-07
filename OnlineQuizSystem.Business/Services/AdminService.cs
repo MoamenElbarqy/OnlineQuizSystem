@@ -7,14 +7,10 @@ namespace OnlineQuizSystem.Business.Services;
 
 public class AdminService(AdminRepository repository)
 {
-    public Admin? IsExsisted(UserLoginRequest request)
+    public async Task<Admin?> IsExisted(UserLoginRequest request)
     {
         var admin = repository.Find(request.Email, request.Password);
-
-        if (admin is null)
-            return null;
-
-        
-        return admin;
+    
+        return await admin;
     }
 }

@@ -7,14 +7,10 @@ namespace OnlineQuizSystem.Business.Services;
 
 public class InstructorService(InstructorRepository repository)
 {
-    public Instructor? IsExsisted(UserLoginRequest request)
+    public Instructor? IsExisted(UserLoginRequest request)
     {
         var instructor = repository.Find(request.Email, request.Password);
 
-        if (instructor is null)
-            return null;
-
-        
 
         return instructor;
     }

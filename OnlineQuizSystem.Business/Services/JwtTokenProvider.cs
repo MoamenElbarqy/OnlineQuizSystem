@@ -1,9 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using OnlineQuizSystem.API.Interfaces;
-using OnlineQuizSystem.API.Response;
 
 namespace OnlineQuizSystem.API.Services;
 
@@ -15,7 +15,7 @@ public class JwtTokenProvider : ITokenProvider
         _configuration = configuration;
     }
 
-    public UserTokenResponse GenerateToken(GenerateTokenRequest generateTokenRequest)
+    public TokenResponse GenerateToken(GenerateTokenRequest generateTokenRequest)
     {
 
         var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -44,7 +44,7 @@ public class JwtTokenProvider : ITokenProvider
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.CreateToken(descriptor);
 
-        return new UserTokenResponse
+        return new TokenResponse
         {
             AceessToken = tokenHandler.WriteToken(securityToken),
             RefreshToken = "7a6f23b4e1d04c9a8f5b6d7c8a9e01f1",
@@ -53,8 +53,8 @@ public class JwtTokenProvider : ITokenProvider
 
     }
 
-    public UserTokenResponse RefreshToken(RefreshTokenRequest refreshTokenRequest)
+    public TokenResponse RefreshToken(string refreshToken)
     {
-        throw new NotImplementedException();
+        
     }
 }

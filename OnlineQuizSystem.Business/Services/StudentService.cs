@@ -7,7 +7,7 @@ namespace OnlineQuizSystem.Business.Services;
 
 public class StudentService(StudentRepository repository)
 {
-    public Student? IsExsisted(UserLoginRequest request)
+    public Student? IsExisted(UserLoginRequest request)
     {
         var student = repository.Find(request.Email,request.Password);
 

@@ -5,5 +5,5 @@ namespace OnlineQuizSystem.Business.Interfaces;
 
 public interface ILoginManager
 {
-    public Task<User?> CheckCredentialsAsync(UserLoginRequest request);
+    public Task<User?> CheckUserCredentialsAsync(UserLoginRequest request);
 }
