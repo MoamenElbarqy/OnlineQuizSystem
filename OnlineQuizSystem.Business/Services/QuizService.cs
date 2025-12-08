@@ -1,20 +1,17 @@
 using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Request;
 using OnlineQuizSystem.Business.Response;
+using OnlineQuizSystem.Data;
 
 namespace OnlineQuizSystem.Business.Services;
 
-public class QuizService:IQuizService
+public class QuizService(AppDbContext dbContext):IQuizService
 {
-    QuizService()
-    {
-        
-    }
+
     public Task<bool> Create(CreateQuizRequest request)
     {
-        throw new NotImplementedException();
+         throw new NotImplementedException();
     }
-
     public Task<bool> Delete(Guid id)
     {
         throw new NotImplementedException();

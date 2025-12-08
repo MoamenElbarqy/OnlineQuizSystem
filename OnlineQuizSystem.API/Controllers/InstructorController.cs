@@ -1,17 +1,21 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineQuizSystem.Business.Request;
+using OnlineQuizSystem.Business.Services;
 
 namespace OnlineQuizSystem.API.Controllers;
 
 [ApiController]
 [Authorize(Roles = "Instructor")]
 [Route("instructor")]
-public class InstructorController : ControllerBase
+public class InstructorController(QuizService quizService) : ControllerBase
 {
+
     [HttpPost("quizzes")]
     public Task<IActionResult> CreateQuiz( [FromBody] CreateQuizRequest request)
     {
+        quizService.Create(request);
+        
         return Task.FromResult<IActionResult>(Ok());
     }
 
