@@ -4,7 +4,7 @@ namespace OnlineQuizSystem.Data.Repositories;
 
 public class InstructorRepository(AppDbContext context)
 {
-    public Instructor? Find(Guid id)
+    public Instructor? GetById(Guid id)
     {
         var instructor = context.Instructors
             .FirstOrDefault(i => i.Id == id);
