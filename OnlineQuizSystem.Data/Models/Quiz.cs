@@ -7,7 +7,9 @@ public class Quiz
     public string Title { get; set; }
     public List<StudentQuiz> StudentQuizzes { get; set; } = new();
     public List<Question> Questions { get; set; } = new();
-    
     public Instructor Instructor { get; set; }
     public DateTime CreatedAt { get; set; }
+
+    public int NumberOfQuestions => Questions.Count;
+    public int TotalPoints => Questions.Sum(q => q.Points);
 }
