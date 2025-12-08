@@ -1,18 +1,6 @@
 using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Request;
 using OnlineQuizSystem.Business.Response;
-<<<<<<< HEAD
-using OnlineQuizSystem.Data;
-
-namespace OnlineQuizSystem.Business.Services;
-
-public class QuizService(AppDbContext dbContext):IQuizService
-{
-
-    public Task<bool> Create(CreateQuizRequest request)
-    {
-         throw new NotImplementedException();
-=======
 using OnlineQuizSystem.Data.Models;
 using OnlineQuizSystem.Data.Repositories;
 
@@ -70,7 +58,6 @@ public class QuizService(InstructorRepository instructorRepository,
 
         return result;
 
->>>>>>> login-authentication-branch
     }
     public Task<bool> Delete(Guid id)
     {

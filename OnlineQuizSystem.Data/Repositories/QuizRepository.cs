@@ -13,15 +13,15 @@ public class QuizRepository(AppDbContext context) : IQuizRepository
         return await context.SaveChangesAsync() > 0;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         var quiz = await context.Quizzes.FirstOrDefaultAsync(q => q.Id == id);
 
         if (quiz is null)
-            return;
+            return false;
 
         context.Quizzes.Remove(quiz);
-        await context.SaveChangesAsync();
+        return await context.SaveChangesAsync() > 0;
 
     }
 
@@ -50,7 +50,7 @@ public class QuizRepository(AppDbContext context) : IQuizRepository
         return quizzes;
     }
 
-    public Task UpdateAsync(Quiz quiz)
+    public async Task<bool> UpdateAsync(Quiz quiz)
     {
         var existingQuiz = context.Quizzes.FirstOrDefault(q => q.Id == quiz.Id);
 
@@ -58,6 +58,6 @@ public class QuizRepository(AppDbContext context) : IQuizRepository
             throw new Exception("Quiz not found");
 
         context.Quizzes.Update(quiz);
-        return context.SaveChangesAsync();
+        return await context.SaveChangesAsync() > 0;
     }
 }
