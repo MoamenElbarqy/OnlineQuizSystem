@@ -2,21 +2,21 @@ using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Data.Repositories;
 
-public class StudentRepository(AppDbContext context)
+public class StudentRepository(AppDbContext context) : IStudentRepository
 {
     public Student? Find(Guid id)
     {
         var student = context.Students
             .FirstOrDefault(s => s.Id == id);
-        
+
         return student;
-        
+
     }
 
     public Student? Find(string email, string password)
     {
         var student = context.Students
-            .FirstOrDefault(s => s.Email == email && s.Password == password);  
+            .FirstOrDefault(s => s.Email == email && s.Password == password);
 
         return student;
     }
@@ -25,7 +25,7 @@ public class StudentRepository(AppDbContext context)
         context.Students.Add(student);
         var changes = context.SaveChanges();
         return changes > 0;
-        
+
     }
     public bool Update(Student student)
     {
@@ -39,5 +39,5 @@ public class StudentRepository(AppDbContext context)
         var changes = context.SaveChanges();
         return changes > 0;
     }
-    
+
 }

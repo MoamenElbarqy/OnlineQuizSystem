@@ -1,20 +1,19 @@
 using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Business.Services;
 using OnlineQuizSystem.Data.Models;
 
-namespace OnlineQuizSystem.Business.Managers;
+namespace OnlineQuizSystem.Business.Services;
 
-class AuthenticationService : IAuthenticationService
+public class AuthenticationService : IAuthenticationService
 {
-    private readonly AdminService _adminService;
-    AuthenticationService(AdminService adminService)
+    private readonly UserService _userService;
+    AuthenticationService(UserService userService)
     {
-        _adminService = adminService;
+        _userService = userService;
     }
     public async Task<User?> AuthenticateAsync(UserLoginRequest request)
     {
-        var admin = await _adminService.IsExisted(request);
+        var user = await _userService.IsExistedAsync(request.Email, request.Password);
 
         return null;
     }

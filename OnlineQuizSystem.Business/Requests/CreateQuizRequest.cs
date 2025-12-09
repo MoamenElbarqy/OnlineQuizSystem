@@ -1,6 +1,5 @@
 namespace OnlineQuizSystem.Business.Request;
 
-
 public class CreateQuizRequest
 {
     public string Title { get; set; }

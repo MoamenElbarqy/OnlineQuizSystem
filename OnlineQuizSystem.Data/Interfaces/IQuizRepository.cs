@@ -10,3 +10,19 @@ public interface IQuizRepository
     Task<bool> DeleteAsync(Guid id);
     Task<bool> ExistsAsync(Guid id);
 }
+public interface IUserRepository
+{
+    Task<User?> FindAsync(string email, string password);
+}
+public interface IAdminRepository
+{
+    Admin? Find(string email, string password);
+}
+public interface IInstructorRepository
+{
+    Instructor? Find(string email, string password);
+}
+public interface IStudentRepository
+{
+    Student? Find(string email, string password);
+}

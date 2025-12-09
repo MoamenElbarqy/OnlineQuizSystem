@@ -1,13 +1,14 @@
+using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Data.Models;
 using OnlineQuizSystem.Data.Repositories;
 
 namespace OnlineQuizSystem.Business.Services;
 
-public class UserService(UserRepository userRepository)
+public class UserService(UserRepository userRepository) : IUserService
 {
-    public User? IsExisted(string email, string password)
+    public async Task<User?> IsExistedAsync(string email, string password)
     {
-        var user = userRepository.Find(email, password);
+        var user = await userRepository.Find(email, password);
 
         return user;
     }

@@ -10,7 +10,6 @@ public class ChoiceConfiguration : IEntityTypeConfiguration<Choice>
     {
         builder.ToTable("Choices");
 
-        
         builder.HasKey(c => c.Id);
         
         builder.Property(c => c.Text).IsRequired();
@@ -18,10 +17,6 @@ public class ChoiceConfiguration : IEntityTypeConfiguration<Choice>
         builder.HasOne(c => c.Question)
             .WithMany(q => q.Choices)
             .HasForeignKey(c => c.QuestionId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        builder.Property(c=> c.ChoiceIndex).IsRequired();
-        
-        
+            .OnDelete(DeleteBehavior.Cascade);    
     }
 }

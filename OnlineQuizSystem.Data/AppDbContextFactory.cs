@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace OnlineQuizSystem.Data;
 
+// This method is used by EF Core tools to create a DbContext instance at design time
 public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)

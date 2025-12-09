@@ -10,5 +10,5 @@ public class User
     public string Password { get; set; }
     public Role Role { get; set; }
 
-    List<RefreshToken> RefreshTokens { get; set; } = new();
+    public List<RefreshToken> RefreshTokens { get; set; } = new();
 }

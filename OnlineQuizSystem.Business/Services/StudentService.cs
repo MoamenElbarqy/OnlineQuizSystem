@@ -1,19 +1,22 @@
 using System;
+using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Requests;
 using OnlineQuizSystem.Data.Models;
 using OnlineQuizSystem.Data.Repositories;
 
 namespace OnlineQuizSystem.Business.Services;
 
-public class StudentService(StudentRepository repository)
+
+
+public class StudentService(StudentRepository repository) : IStudentService
 {
     public Student? IsExisted(UserLoginRequest request)
     {
-        var student = repository.Find(request.Email,request.Password);
+        var student = repository.Find(request.Email, request.Password);
 
-        if(student is null)
+        if (student is null)
             return null;
 
         return student;
-    }   
+    }
 }

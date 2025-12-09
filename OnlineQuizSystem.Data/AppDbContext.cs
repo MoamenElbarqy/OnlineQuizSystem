@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using OnlineQuizSystem.Data.Models;
 namespace OnlineQuizSystem.Data;
 
@@ -25,5 +26,19 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            var primaryKey = entityType.FindPrimaryKey();
+            if (primaryKey != null && primaryKey.Properties.Count == 1)
+            {
+                var primaryKeyProperty = primaryKey.Properties[0];
+                if (primaryKeyProperty.ClrType == typeof(Guid))
+                {
+                    primaryKeyProperty.ValueGenerated = ValueGenerated.Never;
+                }
+            }
+        }
+
     }
 }

@@ -4,7 +4,7 @@ using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Data.Configurations;
 
-public class SolvedQuestionConfiguration : IEntityTypeConfiguration<StudentQuestion>
+public class StudentQuestionConfiguration : IEntityTypeConfiguration<StudentQuestion>
 {
     public void Configure(EntityTypeBuilder<StudentQuestion> builder)
     {
@@ -12,7 +12,14 @@ public class SolvedQuestionConfiguration : IEntityTypeConfiguration<StudentQuest
 
         builder.HasKey( q =>  q.Id);
 
-        builder.Property( q =>  q.StudentChoice).IsRequired();
+        builder.Property(q => q.StudentChoiceId).IsRequired();
+
+
+        builder.HasOne(q => q.StudentChoice)
+            .WithMany()
+            .HasForeignKey( q =>  q.StudentChoiceId)
+            .OnDelete(DeleteBehavior.Restrict);
+
 
         builder.HasOne( q =>  q.Student)
             .WithMany(s => s.SolvedQuestions)
@@ -23,24 +30,10 @@ public class SolvedQuestionConfiguration : IEntityTypeConfiguration<StudentQuest
             .HasForeignKey( q =>  q.StudentQuizId);
         
         builder.HasOne( q =>  q.Question)
-            .WithMany(q => q.StudentQuestions)    // if you add this navigation
+            .WithMany(q => q.StudentQuestions)
             .HasForeignKey( q =>  q.QuestionId)
             .OnDelete(DeleteBehavior.Restrict);
         
         builder.HasOne( q =>  q.Question);
     }
 }
-
-/*
- * public class SolvedQuestion
-   {
-       public Guid Id { get; set; }
-       public Guid StudentId { get; set; }
-       public Guid QuestionId { get; set; }
-       public int StudentChoice { get; set; }
-
-
-       public Student Student { get; set; }
-       public Question Question { get; set; }
-   }
- */
