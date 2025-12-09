@@ -14,10 +14,6 @@ public interface IUserRepository
 {
     Task<User?> FindAsync(string email, string password);
 }
-public interface IAdminRepository
-{
-    Admin? Find(string email, string password);
-}
 public interface IInstructorRepository
 {
     Instructor? Find(string email, string password);

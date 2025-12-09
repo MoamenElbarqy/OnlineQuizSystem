@@ -22,13 +22,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // ========== Repositories ==========
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
-builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IQuizRepository, QuizRepository>();
 
 // ========== Services ==========
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
-builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IQuizService, QuizService>();
 builder.Services.AddScoped<OnlineQuizSystem.Business.Interfaces.IAuthenticationService, 
 OnlineQuizSystem.Business.Services.AuthenticationService>();

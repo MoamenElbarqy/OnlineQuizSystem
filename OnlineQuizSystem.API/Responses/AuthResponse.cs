@@ -9,16 +9,3 @@ public class AuthResponse
     public DateTime ExpiresAt { get; set; }
     public UserDto User { get; set; }
 }
-
-
-/*
-    The Response JSON structure will be like this:
-    {
-        "accessToken": "ToekenStringHere",
-        "expiresAt": "2024-06-10T12:34:56.789Z",
-        user : {
-            "username": "Moamen",
-            "role": "Admin"
-        }
-    }
-*/

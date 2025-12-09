@@ -13,8 +13,6 @@ public class AppDbContext : DbContext
     public DbSet<StudentQuestion> SolvedQuestions { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<Admin> Admins { get; set; }
-
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     
     public AppDbContext(DbContextOptions<AppDbContext> options)
