@@ -1,16 +1,43 @@
 using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using OnlineQuizSystem.API.Interfaces;
+using OnlineQuizSystem.API.Services;
+using OnlineQuizSystem.Business.Interfaces;
+using OnlineQuizSystem.Business.Services;
 using OnlineQuizSystem.Business.Validators;
+using OnlineQuizSystem.Data;
+using OnlineQuizSystem.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddFluentValidationAutoValidation();
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateQuestionRequestValidator>();
+// ========== Repositories ==========
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+
+// ========== Services ==========
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IInstructorService, InstructorService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IQuizService, QuizService>();
+builder.Services.AddScoped<OnlineQuizSystem.Business.Interfaces.IAuthenticationService, 
+OnlineQuizSystem.Business.Services.AuthenticationService>();
+
+// Token
+builder.Services.AddScoped<ITokenProvider, JwtTokenProvider>();
+
+
+
 
 builder.Services.AddAuthentication(options =>
 {
@@ -39,12 +66,11 @@ builder.Services.AddAuthentication(options =>
 });
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.UseHttpsRedirection();
-
 
 app.Run();
 
