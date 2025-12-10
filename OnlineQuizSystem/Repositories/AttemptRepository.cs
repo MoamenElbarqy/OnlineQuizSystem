@@ -4,7 +4,7 @@ using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Data.Repositories;
 
-public class AttemptController(AppDbContext dbContext) : IAttemptRepository
+public class AttemptRepository(AppDbContext dbContext) : IAttemptRepository
 {
     public async Task<bool> CreateAttempt(Guid quizId, Guid studentId, DateTime StatedAt)
     {
