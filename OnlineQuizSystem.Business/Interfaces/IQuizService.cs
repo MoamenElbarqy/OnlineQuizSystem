@@ -1,16 +1,15 @@
 using OnlineQuizSystem.Business.Request;
-using OnlineQuizSystem.Business.Response;
-
+using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Business.Interfaces;
 
 public interface IQuizService
 {
-    public Task<bool> Create(CreateQuizRequest request);
-    public Task<bool> Delete(Guid id);
-    public Task<bool> Update(Guid id, UpdateQuizRequest request);
-    public Task<QuizResponse> GetById(Guid id);
-    public Task<IEnumerable<QuizResponse>> GetAll();
-    public Task StartQuiz(Guid id);
-    public Task SubmitQuiz(Guid id);
+    public Task<bool> Create(CreateQuizRequest request, Guid instructorId);
+    public Task<bool> Delete(Guid id, Guid instructorId);
+    public Task<bool> Update(Guid id, UpdateQuizRequest request, Guid instructorId);
+    public Task<Quiz> GetById(Guid id, Guid instructorId);
+
+    public Task<Quiz> GetById(Guid id);
+    public Task<IEnumerable<Quiz>> GetAll(Guid instructorId);
 }

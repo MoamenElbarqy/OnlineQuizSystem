@@ -13,9 +13,9 @@ namespace OnlineQuizSystem.API.Controllers;
 [Route("auth")]
 public class AuthController : ControllerBase
 {
-    private readonly IAuthenticationService _LoginManager;
+    private readonly IAuthService _LoginManager;
     private readonly ITokenProvider _tokenProvider;
-    public AuthController(IAuthenticationService LoginManager, ITokenProvider tokenProvider)
+    public AuthController(IAuthService LoginManager, ITokenProvider tokenProvider)
     {
         _LoginManager = LoginManager;
         _tokenProvider = tokenProvider;
@@ -87,7 +87,7 @@ public class AuthController : ControllerBase
         });
 
         var response = new AuthResponse
-        {   
+        {
             AccessToken = tokenResponse.AccessToken,
             ExpiresAt = tokenResponse.ExpiresIn,
             User = UserDto

@@ -1,8 +1,9 @@
+using OnlineQuizSystem.Data.Interfaces;
 using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Data.Repositories;
 
-public class InstructorRepository(AppDbContext context)
+public class InstructorRepository(AppDbContext context):IInstructorRepository
 {
     public Instructor? GetById(Guid id)
     {

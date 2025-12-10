@@ -9,8 +9,8 @@ public class AppDbContext : DbContext
     public DbSet<Question> Questions { get; set; }
     public DbSet<Choice> Choices { get; set; }
     public DbSet<Student> Students { get; set; }
-    public DbSet<StudentQuiz> SolvedQuizzes { get; set; }
-    public DbSet<StudentQuestion> SolvedQuestions { get; set; }
+    public DbSet<StudentQuiz> StudentQuizzes { get; set; }
+    public DbSet<StudentQuestion> StudentQuestions { get; set; }
     public DbSet<Instructor> Instructors { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }

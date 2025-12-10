@@ -59,37 +59,23 @@ public class QuizService(InstructorRepository instructorRepository,
         return result;
 
     }
-    public Task<bool> Delete(Guid id)
+
+    public Task<bool> Delete(Guid id, Guid instructorId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<bool> Update(Guid id, UpdateQuizRequest request)
+    public Task<bool> Update(Guid id, UpdateQuizRequest request, Guid instructorId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<QuizResponse> GetById(Guid id)
+    public Task<Quiz> GetById(Guid id, Guid instructorId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<QuizResponse>> GetAll()
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task StartQuiz(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task SubmitQuiz(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<bool> Create(CreateQuizRequest request)
+    public Task<IEnumerable<Quiz>> GetAll(Guid instructorId)
     {
         throw new NotImplementedException();
     }

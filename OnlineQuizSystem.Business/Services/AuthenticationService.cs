@@ -4,10 +4,10 @@ using OnlineQuizSystem.Data.Models;
 
 namespace OnlineQuizSystem.Business.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthService : IAuthService
 {
     private readonly UserService _userService;
-    AuthenticationService(UserService userService)
+    AuthService(UserService userService)
     {
         _userService = userService;
     }

@@ -8,30 +8,34 @@ using Microsoft.IdentityModel.Tokens;
 using OnlineQuizSystem.API.Interfaces;
 using OnlineQuizSystem.API.Services;
 using OnlineQuizSystem.Business.Interfaces;
+using OnlineQuizSystem.Business;
 using OnlineQuizSystem.Business.Services;
 using OnlineQuizSystem.Business.Validators;
 using OnlineQuizSystem.Data;
 using OnlineQuizSystem.Data.Repositories;
+using OnlineQuizSystem.Data.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+}
 
+{
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+    builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+}
 
-// ========== Repositories ==========
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
-builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+{
+    builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IInstructorService, InstructorService>();
+    builder.Services.AddScoped<IQuizService, QuizService>();
+    builder.Services.AddScoped<IAuthService,AuthService>();
+}
 
-// ========== Services ==========
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IInstructorService, InstructorService>();
-builder.Services.AddScoped<IQuizService, QuizService>();
-builder.Services.AddScoped<OnlineQuizSystem.Business.Interfaces.IAuthenticationService, 
-OnlineQuizSystem.Business.Services.AuthenticationService>();
-
-// Token
 builder.Services.AddScoped<ITokenProvider, JwtTokenProvider>();
 
 
@@ -39,12 +43,12 @@ builder.Services.AddScoped<ITokenProvider, JwtTokenProvider>();
 
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme =  JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
     var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-    
+
     options.TokenValidationParameters = new()
     {
         ClockSkew = TimeSpan.Zero,
@@ -52,14 +56,14 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        
+
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!)
         )
 
-        
+
     };
 });
 var app = builder.Build();
