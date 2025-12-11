@@ -1,7 +1,6 @@
-using OnlineQuizSystem.Data.Enums;
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Models;
 
-namespace OnlineQuizSystem.API.Response;
+namespace OnlineQuizSystem.Response;
 
 public class TokenResponse
 {

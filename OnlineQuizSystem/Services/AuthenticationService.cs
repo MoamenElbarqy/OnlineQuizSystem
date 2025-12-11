@@ -1,12 +1,13 @@
-using OnlineQuizSystem.Business.Interfaces;
+using OnlineQuizSystem.Interfaces;
 using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Models;
 
 namespace OnlineQuizSystem.Business.Services;
 
 public class AuthService : IAuthService
 {
     private readonly UserService _userService;
+    
     AuthService(UserService userService)
     {
         _userService = userService;

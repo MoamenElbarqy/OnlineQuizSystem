@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Models;
+
 namespace OnlineQuizSystem.Data;
 
 public class AppDbContext : DbContext

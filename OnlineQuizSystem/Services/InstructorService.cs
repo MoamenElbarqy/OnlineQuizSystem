@@ -1,12 +1,11 @@
-using System;
-using OnlineQuizSystem.Business.Interfaces;
-using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Data.Models;
-using OnlineQuizSystem.Data.Repositories;
+using OnlineQuizSystem.Data;
+using OnlineQuizSystem.Interfaces;
+using OnlineQuizSystem.Models;
+using OnlineQuizSystem.Requests;
 
 namespace OnlineQuizSystem.Business.Services;
 
-public class InstructorService(InstructorRepository repository) : IInstructorService
+public class InstructorService(AppDbContext dbContext) : IInstructorService
 {
     public Instructor? IsExisted(UserLoginRequest request)
     {
@@ -14,5 +13,10 @@ public class InstructorService(InstructorRepository repository) : IInstructorSer
 
 
         return instructor;
+    }
+
+    public Instructor? IsExisted(UserLoginRequest request)
+    {
+        throw new NotImplementedException();
     }
 }

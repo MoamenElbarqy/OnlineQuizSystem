@@ -1,4 +1,4 @@
-namespace OnlineQuizSystem.Data.Models;
+namespace OnlineQuizSystem.Models;
 
 public class Choice
 {

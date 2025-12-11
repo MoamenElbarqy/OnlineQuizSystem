@@ -1,7 +1,7 @@
 using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Models;
 
-namespace OnlineQuizSystem.Business.Interfaces;
+namespace OnlineQuizSystem.Interfaces;
 
 public interface IAuthService
 {

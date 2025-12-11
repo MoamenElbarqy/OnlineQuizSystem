@@ -1,10 +1,11 @@
-using OnlineQuizSystem.Business.Interfaces;
 using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Data.Interfaces;
+using OnlineQuizSystem.Requests;
+using OnlineQuizSystem.Data;
+using OnlineQuizSystem.Interfaces;
 
 namespace OnlineQuizSystem.Business.Services;
 
-public class AttemptService(IAttemptRepository attemptRepository) : IAttemptService
+public class AttemptService(AppDbContext dbContext) : IAttemptService
 {
     public async Task<bool> Create(CreateAttemptRequest request, Guid studentId, Guid QuizId)
     {

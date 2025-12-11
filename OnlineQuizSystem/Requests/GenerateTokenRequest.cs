@@ -1,6 +1,6 @@
 using OnlineQuizSystem.Data.Enums;
 
-namespace OnlineQuizSystem.API.Services;
+namespace OnlineQuizSystem.Requests;
 
 public class GenerateTokenRequest
 {

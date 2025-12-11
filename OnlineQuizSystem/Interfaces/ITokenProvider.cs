@@ -1,7 +1,8 @@
-using OnlineQuizSystem.API.Response;
-using OnlineQuizSystem.API.Services;
+using OnlineQuizSystem.Response;
+using OnlineQuizSystem.Services;
 
-namespace OnlineQuizSystem.API.Interfaces;
+
+namespace OnlineQuizSystem.Interfaces;
 
 public interface ITokenProvider
 {

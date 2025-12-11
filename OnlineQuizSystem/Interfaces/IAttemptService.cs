@@ -1,6 +1,6 @@
 using OnlineQuizSystem.Business.Requests;
 
-namespace OnlineQuizSystem.Business.Interfaces;
+namespace OnlineQuizSystem.Interfaces;
 
 public interface IAttemptService
 {

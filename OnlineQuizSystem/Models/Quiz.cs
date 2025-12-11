@@ -1,6 +1,6 @@
-using OnlineQuizSystem.Data.Enums;
+using OnlineQuizSystem.Enums;
 
-namespace OnlineQuizSystem.Data.Models;
+namespace OnlineQuizSystem.Models;
 
 public class Quiz
 {

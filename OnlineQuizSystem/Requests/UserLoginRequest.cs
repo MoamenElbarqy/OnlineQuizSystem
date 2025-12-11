@@ -1,6 +1,6 @@
 using OnlineQuizSystem.Data.Enums;
 
-namespace OnlineQuizSystem.Business.Requests;
+namespace OnlineQuizSystem.Requests;
 
 public class UserLoginRequest
 {

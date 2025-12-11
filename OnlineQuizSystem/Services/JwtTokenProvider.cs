@@ -5,12 +5,13 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using OnlineQuizSystem.API.Interfaces;
-using OnlineQuizSystem.API.Response;
 using OnlineQuizSystem.Data;
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Interfaces;
+using OnlineQuizSystem.Models;
+using OnlineQuizSystem.Requests;
+using OnlineQuizSystem.Response;
 
-namespace OnlineQuizSystem.API.Services;
+namespace OnlineQuizSystem.Services;
 
 public class JwtTokenProvider : ITokenProvider
 {

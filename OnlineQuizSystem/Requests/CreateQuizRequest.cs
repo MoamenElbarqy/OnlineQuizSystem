@@ -1,4 +1,6 @@
-namespace OnlineQuizSystem.Business.Request;
+using OnlineQuizSystem.Requests;
+
+namespace OnlineQuizSystem.Requests;
 
 public class CreateQuizRequest
 {

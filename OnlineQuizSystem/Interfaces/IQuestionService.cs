@@ -1,7 +1,7 @@
 using OnlineQuizSystem.Business.Request;
 using OnlineQuizSystem.Business.Services;
 
-namespace OnlineQuizSystem.Business.Interfaces;
+namespace OnlineQuizSystem.Interfaces;
 
 public interface IQuestionService
 {
