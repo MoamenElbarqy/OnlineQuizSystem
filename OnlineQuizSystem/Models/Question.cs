@@ -10,6 +10,7 @@ public class Question
     public Guid CorrectChoiceId { get; set; }
     public Choice CorrectChoice { get; set; }
     
+    public int DisplayOrder { get; set; }
     public int Points { get; set; }
     public Quiz Quiz { get; set; }
     public List<StudentQuestion> StudentQuestions { get; set; } = new();

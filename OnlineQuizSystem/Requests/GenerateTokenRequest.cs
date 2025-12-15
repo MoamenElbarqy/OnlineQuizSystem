@@ -1,4 +1,4 @@
-using OnlineQuizSystem.Data.Enums;
+using OnlineQuizSystem.Enums;
 
 namespace OnlineQuizSystem.Requests;
 

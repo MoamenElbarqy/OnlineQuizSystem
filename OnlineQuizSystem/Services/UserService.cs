@@ -1,15 +1,18 @@
-using OnlineQuizSystem.Business.Interfaces;
-using OnlineQuizSystem.Data.Models;
-using OnlineQuizSystem.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
+using OnlineQuizSystem.Data;
+using OnlineQuizSystem.Interfaces;
+using OnlineQuizSystem.Models;
 
-namespace OnlineQuizSystem.Business.Services;
+namespace OnlineQuizSystem.Services;
 
-public class UserService(UserRepository userRepository) : IUserService
+public class UserService(AppDbContext dbContext) : IUserService
 {
-    public async Task<User?> IsExistedAsync(string email, string password)
+    public async Task<Instructor?> GetByIdAsync(Guid instructorId)
     {
-        var user = await userRepository.Find(email, password);
-
-        return user;
+        return await dbContext.Instructors.FirstOrDefaultAsync(i => i.Id == instructorId);
+    }
+    public async Task<User?> FindAsync(string email, string password)
+    {
+        return await dbContext.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
     }
 }

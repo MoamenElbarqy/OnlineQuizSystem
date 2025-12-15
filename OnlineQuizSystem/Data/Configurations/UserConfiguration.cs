@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnlineQuizSystem.Data.Models;
+using OnlineQuizSystem.Models;
 namespace OnlineQuizSystem.Data.Configurations;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>

@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using OnlineQuizSystem.API.Interfaces;
-using OnlineQuizSystem.API.Models;
-using OnlineQuizSystem.API.Response;
-using OnlineQuizSystem.API.Responses;
-using OnlineQuizSystem.API.Services;
-using OnlineQuizSystem.Business.Interfaces;
-using OnlineQuizSystem.Business.Requests;
+using OnlineQuizSystem.Interfaces;
+using OnlineQuizSystem.Responses;
+using OnlineQuizSystem.Requests;
 
 namespace OnlineQuizSystem.API.Controllers;
 
@@ -22,6 +18,8 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [ProducesResponseType<AuthResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login(UserLoginRequest request)
     {
         var user = await _LoginManager.AuthenticateAsync(request);
@@ -40,7 +38,7 @@ public class AuthController : ControllerBase
         if (tokenResponse is null)
             return BadRequest("Invalid Data");
 
-        var UserDto = new UserDto
+        var UserDto = new UserAuthResponse
         {
             Username = user.Name,
             Role = user.Role
@@ -61,6 +59,8 @@ public class AuthController : ControllerBase
         return Ok(response);
     }
     [HttpPost("refresh")]
+    [ProducesResponseType<AuthResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Refresh()
     {
         var refreshToken = Request.Cookies["refreshToken"];
@@ -73,7 +73,7 @@ public class AuthController : ControllerBase
         if (tokenResponse is null)
             return BadRequest("Invalid Data");
 
-        UserDto UserDto = new UserDto
+        UserAuthResponse UserDto = new UserAuthResponse
         {
             Username = tokenResponse.RefreshToken.User.Name,
             Role = tokenResponse.RefreshToken.User.Role

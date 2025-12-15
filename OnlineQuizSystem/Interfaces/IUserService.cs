@@ -4,5 +4,6 @@ namespace OnlineQuizSystem.Interfaces;
 
 public interface IUserService
 {
-    Task<User?> IsExistedAsync(string email, string password);
+    public Task<Instructor?> GetByIdAsync(Guid instructorId);
+    public Task<User?> FindAsync(string email, string password);
 }

@@ -1,8 +1,8 @@
-using OnlineQuizSystem.Business.Requests;
+using OnlineQuizSystem.Requests;
 
 namespace OnlineQuizSystem.Interfaces;
 
 public interface IAttemptService
 {
-    Task<bool> Create(CreateAttemptRequest request, Guid studentId, Guid QuizId);
+    Task<bool> CreateAttemptAsync(CreateQuizAttemptRequest request, Guid studentId, Guid QuizId);
 }

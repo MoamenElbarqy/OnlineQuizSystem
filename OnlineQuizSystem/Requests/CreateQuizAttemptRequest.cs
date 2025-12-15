@@ -1,8 +1,10 @@
-using System;
+namespace OnlineQuizSystem.Requests;
 
-namespace OnlineQuizSystem.Business.Requests;
-
-public class CreateAttemptRequest
+public class CreateQuizAttemptRequest
 {
+    public Guid QuizId { get; set; }
+    public List<CreateQuestionAttemptRequest> QuestionAttempts { get; set; }
 
+    public DateTime SubmittedAt { get; set; }
 }
+

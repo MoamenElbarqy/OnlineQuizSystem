@@ -1,9 +1,10 @@
-using OnlineQuizSystem.Requests;
 using OnlineQuizSystem.Models;
+using OnlineQuizSystem.Requests;
 
 namespace OnlineQuizSystem.Interfaces;
 
 public interface IStudentService
 {
-    Student? IsExisted(UserLoginRequest request);
+    public Task<Student?> CreateStudentAsync(CreateStudentRequest request);
 }
+

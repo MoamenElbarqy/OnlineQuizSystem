@@ -1,46 +1,54 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using OnlineQuizSystem.API.Interfaces;
-using OnlineQuizSystem.API.Services;
-using OnlineQuizSystem.Business.Interfaces;
-using OnlineQuizSystem.Business;
+
 using OnlineQuizSystem.Business.Services;
-using OnlineQuizSystem.Business.Validators;
 using OnlineQuizSystem.Data;
-using OnlineQuizSystem.Data.Repositories;
-using OnlineQuizSystem.Data.Interfaces;
+using OnlineQuizSystem.Interfaces;
+using OnlineQuizSystem.Middlewares;
+using OnlineQuizSystem.Requests;
+using OnlineQuizSystem.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
+// Validation
+{
+    builder.Services.AddValidatorsFromAssemblyContaining<CreateQuizRequest>();
+    builder.Services.AddFluentValidationAutoValidation();
+   
+}
+
+// DataAccess
 {
     builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
     
 }
-
+// Services
 {
-    builder.Services.AddScoped<IUserRepository, UserRepository>();
-    builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
-    builder.Services.AddScoped<IQuizRepository, QuizRepository>();
-}
-
-{
+    builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<IUserService, UserService>();
-    builder.Services.AddScoped<IInstructorService, InstructorService>();
-    builder.Services.AddScoped<IQuizService, QuizService>();
+    builder.Services.AddScoped<IStudentService, StudentService>();
     builder.Services.AddScoped<IAuthService,AuthService>();
+    builder.Services.AddScoped<IInstructorService, InstructorService>();    
+    builder.Services.AddScoped<ITokenProvider, JwtTokenProvider>();
+    builder.Services.AddScoped<IAttemptService, AttemptService>();
+    builder.Services.AddScoped<IQuizService, QuizService>();
 }
 
-builder.Services.AddScoped<ITokenProvider, JwtTokenProvider>();
 
-
-
-
+// Authentication
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -66,13 +74,21 @@ builder.Services.AddAuthentication(options =>
 
     };
 });
+
+
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+
 
 app.Run();
 

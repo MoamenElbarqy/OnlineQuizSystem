@@ -1,9 +1,9 @@
-using OnlineQuizSystem.Business.Requests;
 using OnlineQuizSystem.Models;
+using OnlineQuizSystem.Requests;
 
 namespace OnlineQuizSystem.Interfaces;
 
 public interface IInstructorService
 {
-    Instructor? IsExisted(UserLoginRequest request);
+    Task<Instructor?> CreateInstructorAsync(CreateInstructorRequest request);
 }

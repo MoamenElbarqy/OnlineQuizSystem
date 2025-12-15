@@ -1,4 +1,4 @@
-namespace OnlineQuizSystem.Data.Enums;
+namespace OnlineQuizSystem.Enums;
 
 public enum Role
 {

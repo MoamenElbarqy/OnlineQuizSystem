@@ -1,50 +1,45 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineQuizSystem.Business.Interfaces;
-using OnlineQuizSystem.Business.Requests;
-using OnlineQuizSystem.Data.Enums;
+using OnlineQuizSystem.Enums;
+using OnlineQuizSystem.Interfaces;
+using OnlineQuizSystem.Requests;
 
-namespace OnlineQuizSystem.API.Controllers;
+namespace OnlineQuizSystem.Controllers;
 
-// [Route("api/[controller]")]
 [ApiController]
 [Authorize(Roles = nameof(Role.Student))]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(StatusCodes.Status403Forbidden)]
+[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+
 public class AttemptController : ControllerBase
 {
-    private readonly IQuizService _quizService;
     private readonly IAttemptService _attemptService;
-    public AttemptController(IQuizService quizService, IAttemptService attemptService)
+    public AttemptController(IAttemptService attemptService)
     {
         _attemptService = attemptService;
-        _quizService = quizService;
     }
     [HttpPost("quizzes/{quizId:guid}/attempts")]
-    public async Task<IActionResult> CreateAttempt(Guid quizId, CreateAttemptRequest request)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateAttempt(Guid quizId, CreateQuizAttemptRequest request)
     {
-        Guid studentId = Guid.Parse(User.Identity.Name);
+        Guid studentId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        var quiz = await _quizService.GetById(quizId);
+        var attemptResult = await _attemptService.CreateAttemptAsync(request, studentId, quizId);
 
-        if (quiz is null)
+        if (attemptResult is false)
         {
-            return NotFound("Quiz not found");
-        }
-
-        if (quiz.Status != QuizStatus.InProgress)
-        {
-            return BadRequest("Quiz has already been started or completed");
-        }
-
-        var result = await _attemptService.Create(request, studentId);
-
-        if(!result)
-        {
-            return BadRequest("Failed to create quiz attempt");
+            return Problem(
+                statusCode: StatusCodes.Status400BadRequest,
+                title: "Failed to create quiz attempt",
+                detail: "The quiz attempt could not be created due to business logic constraints.");
         }
 
         return Ok("Quiz attempt created successfully");
     }
-    public Task<IActionResult> SubmitQuiz(int quizId)
-    {
-    }
+
 }
+

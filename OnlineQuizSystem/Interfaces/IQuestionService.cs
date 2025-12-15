@@ -1,5 +1,5 @@
-using OnlineQuizSystem.Business.Request;
-using OnlineQuizSystem.Business.Services;
+using OnlineQuizSystem.Requests;
+using OnlineQuizSystem.Responses;
 
 namespace OnlineQuizSystem.Interfaces;
 
