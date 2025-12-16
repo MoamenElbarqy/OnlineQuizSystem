@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:5032
+
+### Create Student
+
+POST {{baseUrl}}/api/students
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userInfo": {
+    "name": "Moamen Elbarky",
+    "email": "moamen@gmail.com",
+    "password": "P@ssw0rd"
+  },
+  "Level": 2,
+  "Department": "Machine Learning"
+}

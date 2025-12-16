@@ -21,6 +21,5 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
             .HasForeignKey(sq => sq.StudentId)
             .OnDelete(DeleteBehavior.Restrict);
         
-        builder.HasBaseType<User>();
     }
 }

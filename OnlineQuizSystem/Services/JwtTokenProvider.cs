@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using OnlineQuizSystem.Data;
 using OnlineQuizSystem.Interfaces;
@@ -33,6 +32,20 @@ public class JwtTokenProvider : ITokenProvider
         var expires = DateTime.UtcNow.AddMinutes(double.Parse(jwtSettings["TokenExpirationInMinutes"]!));
         var key = jwtSettings["SecretKey"]!;
 
+        var user = await _context.Users.Include(u => u.RefreshTokens).
+        FirstOrDefaultAsync(u => u.Id == generateTokenRequest.Id);
+
+        if (user is null)
+            return null;
+
+        var existingRefreshToken = user.RefreshTokens.FirstOrDefault(rt => rt.IsActive);
+
+        if (existingRefreshToken is not null)
+        {
+            existingRefreshToken.RevokedAt = DateTime.UtcNow;
+            _context.RefreshTokens.Update(existingRefreshToken);
+            await _context.SaveChangesAsync();
+        }
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, generateTokenRequest.Id.ToString()),
@@ -57,10 +70,11 @@ public class JwtTokenProvider : ITokenProvider
 
         RefreshToken refreshTokenModel = new RefreshToken
         {
+            Id = Guid.NewGuid(),
             UserId = generateTokenRequest.Id,
             Token = refreshToken,
             CreatedAt = DateTime.UtcNow,
-            ExpiresAt = DateTime.UtcNow.AddDays(7)
+            ExpiresAt = DateTime.UtcNow.AddMinutes(5)
         };
 
         await _context.RefreshTokens.AddAsync(refreshTokenModel);
@@ -87,10 +101,12 @@ public class JwtTokenProvider : ITokenProvider
             return null;
         
         var existingToken = await _context.RefreshTokens.Include(rt => rt.User)
-            .FirstOrDefaultAsync(rt => rt.Token == refreshToken && rt.IsActive);
+            .FirstOrDefaultAsync(rt => rt.Token == refreshToken);
 
-        if (existingToken is null)
+        if (existingToken == null || !existingToken.IsActive)
+        {
             return null;
+        }
 
         existingToken.RevokedAt = DateTime.UtcNow;
         _context.RefreshTokens.Update(existingToken);

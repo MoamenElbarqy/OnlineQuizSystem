@@ -2,19 +2,21 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineQuizSystem.Interfaces;
 using OnlineQuizSystem.Responses;
 using OnlineQuizSystem.Requests;
+using OnlineQuizSystem.Data;
 
 namespace OnlineQuizSystem.API.Controllers;
 
 [ApiController]
-[Route("auth")]
+[Route("api/auth")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _LoginManager;
-    private readonly ITokenProvider _tokenProvider;
+    private readonly ITokenProvider _TokenProvider;
+
     public AuthController(IAuthService LoginManager, ITokenProvider tokenProvider)
     {
         _LoginManager = LoginManager;
-        _tokenProvider = tokenProvider;
+        _TokenProvider = tokenProvider;
     }
 
     [HttpPost("login")]
@@ -33,7 +35,7 @@ public class AuthController : ControllerBase
             Role = user.Role
         };
 
-        var tokenResponse = await _tokenProvider.GenerateTokenAsync(generateTokenRequest);
+        var tokenResponse = await _TokenProvider.GenerateTokenAsync(generateTokenRequest);
 
         if (tokenResponse is null)
             return BadRequest("Invalid Data");
@@ -68,7 +70,7 @@ public class AuthController : ControllerBase
         if (string.IsNullOrEmpty(refreshToken))
             return BadRequest("Invalid Data");
 
-        var tokenResponse = await _tokenProvider.RefreshTokenAsync(refreshToken);
+        var tokenResponse = await _TokenProvider.RefreshTokenAsync(refreshToken);
 
         if (tokenResponse is null)
             return BadRequest("Invalid Data");
@@ -94,5 +96,5 @@ public class AuthController : ControllerBase
         };
         return Ok(response);
     }
-
+    
 }

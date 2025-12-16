@@ -9,8 +9,7 @@ using OnlineQuizSystem.Responses;
 namespace OnlineQuizSystem.API.Controllers;
 
 [ApiController]
-[Route("quizzes")]
-[ApiVersion("1.0")]
+[Route("api/quizzes")]
 
 [Authorize(Roles = nameof(Role.Instructor))]
 [ProducesResponseType<ProblemDetails>(StatusCodes.Status401Unauthorized)]

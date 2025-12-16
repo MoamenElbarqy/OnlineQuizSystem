@@ -46,6 +46,12 @@ public class GlobalExceptionHandlingMiddleware
                 Title = "Not Found",
                 Detail = exception.Message
             },
+            InvalidOperationException => new ProblemDetails
+            {
+                Status = 400,
+                Title = "Invalid Operation",
+                Detail = exception.Message
+            },
             ValidationException => new ProblemDetails
             {
                 Status = 400,

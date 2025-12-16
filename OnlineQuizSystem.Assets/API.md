@@ -45,3 +45,26 @@ POST /quizzes [By Instructor]
     
 }
 ```
+
+## Auth Controller
+
+- `POST /register` - Register a new user (student or instructor)
+- `POST /login` - Authenticate a user and return a JWT token
+- `POST /logout` - Invalidate the user's JWT token
+- `POST /refresh-token` - Refresh the JWT token
+  
+
+### Quiz Controller
+
+- `POST /quizzes` - Create a new quiz
+- `PUT /quizzes/{quizId}` - Update an existing quiz
+- `DELETE /quizzes/{quizId}` - Delete a quiz
+- `GET /quizzes` - Retrieve all quizzes created by the instructor
+- `GET /quizzes/{quizId}/submissions` - Retrieve Quiz By Sepcific Quiz ID
+
+  
+## Attempts Controller
+
+- `POST /quizzes/{quizId}/attempts/` - Submit a new quiz attempt (Student only)
+- `GET /quizzes/{quizId}/attempts/` - Retrieve all attempts for a specific quiz (Instructor only)
+- `GET /attempts/` - Retrieve All Attempts For Specific Student

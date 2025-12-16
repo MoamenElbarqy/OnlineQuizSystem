@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:5032
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.yJuYW1laWQiOiIwYWViMTYxNi0zZmYyLTQ0MmUtOWNkOS1mMGQ2NzMxMmRiN2EiLCJyb2xlIjoiSW5zdHJ1Y3RvciIsIm5iZiI6MTc2NTg4ODEwNCwiZXhwIjoxNzY1ODg4Mjg0LCJpYXQiOjE3NjU4ODgxMDQsImlzcyI6ImxvY2FsaG9zdCIsImF1ZCI6ImxvY2FsaG9zdCJ9.KW9yzkSUNE1qkrsu3AjGj7J3ye9rTAMDCiJ9VNUiy-s
+
+
+GET {{baseUrl}}/api/instructors/hello
+Authorization: Bearer {{accessToken}}

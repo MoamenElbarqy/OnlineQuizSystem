@@ -9,11 +9,8 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        var basePath = Path.Combine(
-            Directory.GetCurrentDirectory(),  
-            "..", "..", "..",                         
-            "OnlineQuizSystem.API"                       
-        );
+        var basePath = Directory.GetCurrentDirectory();
+
         var config = new ConfigurationBuilder()
             .SetBasePath(basePath) 
             .AddJsonFile("appsettings.json")

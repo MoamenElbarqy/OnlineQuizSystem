@@ -11,12 +11,10 @@ public class ChoiceConfiguration : IEntityTypeConfiguration<Choice>
         builder.ToTable("Choices");
 
         builder.HasKey(c => c.Id);
-        
-        builder.Property(c => c.Text).IsRequired();
-        
+
         builder.HasOne(c => c.Question)
             .WithMany(q => q.Choices)
             .HasForeignKey(c => c.QuestionId)
-            .OnDelete(DeleteBehavior.Cascade);    
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,0 +1,8 @@
+@baseUrl = http://localhost:5032
+@refreshToken = 9wl0KrSUu1UBamxILAJOc5zp0j1BtDlqcMrlzweSYn00m26zt7JaEVCFx2XHfPBPVtBHj2WS6C83F86HnZrKvg%3D%3D
+
+### Refresh Token
+POST {{baseUrl}}/api/auth/refresh
+Content-Type: application/json
+Accept: application/json
+Cookie: refreshToken={{refreshToken}}

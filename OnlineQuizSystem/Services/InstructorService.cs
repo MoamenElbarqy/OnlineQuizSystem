@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineQuizSystem.Data;
 using OnlineQuizSystem.Enums;
+using OnlineQuizSystem.Helpers;
 using OnlineQuizSystem.Interfaces;
 using OnlineQuizSystem.Models;
 using OnlineQuizSystem.Requests;
@@ -11,27 +12,34 @@ public class InstructorService(AppDbContext dbContext) : IInstructorService
 {
     public async Task<Instructor?> CreateInstructorAsync(CreateInstructorRequest request)
     {
-        var existingStudent = await dbContext.Instructors
-            .FirstOrDefaultAsync(s => s.Email == request.UserInfo.Email);
+        var existingInstructor = await dbContext.Instructors
+            .FirstOrDefaultAsync(i => i.Email == request.UserInfo.Email);
 
-        if (existingStudent is null)
+        if (existingInstructor is not null)
         {
-            return null;
+            throw new InvalidOperationException("An instructor with the same email already exists.");
         }
         var instructor = new Instructor
         {
             Id = Guid.NewGuid(),
             Name = request.UserInfo.Name,
             Email = request.UserInfo.Email,
-            Password = request.UserInfo.Password,
+            Password = PasswordHelper.Hash(request.UserInfo.Password),
             Role = Role.Instructor,
             Salary = request.Salary
         };
 
         dbContext.Instructors.Add(instructor);
+
         await dbContext.SaveChangesAsync();
 
         return instructor;
     
+    }
+
+    public Task<Instructor?> GetInstructorByIdAsync(Guid instructorId)
+    {
+        return dbContext.Instructors
+            .FirstOrDefaultAsync(i => i.Id == instructorId);
     }
 }

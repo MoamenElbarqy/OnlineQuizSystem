@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineQuizSystem.Data;
 using OnlineQuizSystem.Enums;
 using OnlineQuizSystem.Interfaces;
 using OnlineQuizSystem.Requests;
@@ -40,6 +41,8 @@ public class AttemptController : ControllerBase
 
         return Ok("Quiz attempt created successfully");
     }
+
+    
 
 }
 

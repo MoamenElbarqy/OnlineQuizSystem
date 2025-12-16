@@ -6,4 +6,6 @@ namespace OnlineQuizSystem.Interfaces;
 public interface IInstructorService
 {
     Task<Instructor?> CreateInstructorAsync(CreateInstructorRequest request);
+
+    Task<Instructor?> GetInstructorByIdAsync(Guid instructorId);
 }

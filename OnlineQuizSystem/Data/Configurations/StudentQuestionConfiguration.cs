@@ -10,30 +10,25 @@ public class StudentQuestionConfiguration : IEntityTypeConfiguration<StudentQues
     {
         builder.ToTable("StudentQuestions");
 
-        builder.HasKey( q =>  q.Id);
-
-        builder.Property(q => q.StudentChoiceId).IsRequired();
-
 
         builder.HasOne(q => q.StudentChoice)
             .WithMany()
-            .HasForeignKey( q =>  q.StudentChoiceId)
+            .HasForeignKey(q => q.StudentChoiceId)
             .OnDelete(DeleteBehavior.Restrict);
 
 
-        builder.HasOne( q =>  q.Student)
+        builder.HasOne(q => q.Student)
             .WithMany(s => s.SolvedQuestions)
-            .HasForeignKey( q =>  q.StudentId);
+            .HasForeignKey(q => q.StudentId);
 
-        builder.HasOne( q =>  q.StudentQuiz)
+        builder.HasOne(q => q.StudentQuiz)
             .WithMany(solvedQuiz => solvedQuiz.SolvedQuestions)
-            .HasForeignKey( q =>  q.StudentQuizId);
-        
-        builder.HasOne( q =>  q.Question)
+            .HasForeignKey(q => q.StudentQuizId);
+
+        builder.HasOne(q => q.Question)
             .WithMany(q => q.StudentQuestions)
-            .HasForeignKey( q =>  q.QuestionId)
+            .HasForeignKey(q => q.QuestionId)
             .OnDelete(DeleteBehavior.Restrict);
-        
-        builder.HasOne( q =>  q.Question);
+
     }
 }

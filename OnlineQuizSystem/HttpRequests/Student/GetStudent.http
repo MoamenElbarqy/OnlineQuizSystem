@@ -1,0 +1,8 @@
+@baseUrl = http://localhost:5032
+@studentId = 15f3a4d3-f4b4-4deb-895c-e6ffb14fe051
+
+
+### Get Student By Id
+GET {{baseUrl}}/api/students/{{studentId}}
+
+

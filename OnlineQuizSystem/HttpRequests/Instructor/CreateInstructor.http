@@ -1,0 +1,16 @@
+@baseUrl = http://localhost:5032
+
+### Create Instructor
+
+POST {{baseUrl}}/api/instructors
+Content-Type: application/json
+Accept: application/json
+
+{
+  "userInfo": {
+    "name": "Osama Abdelraouf",
+    "email": "ossama@gmail.com",
+    "password": "P@ssw0rd"
+  },
+  "salary": 20000
+}

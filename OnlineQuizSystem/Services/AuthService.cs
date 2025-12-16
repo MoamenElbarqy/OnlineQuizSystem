@@ -16,6 +16,6 @@ public class AuthService : IAuthService
     {
         var user = await _userService.FindAsync(request.Email, request.Password);
 
-        return null;
+        return user;
     }
 }

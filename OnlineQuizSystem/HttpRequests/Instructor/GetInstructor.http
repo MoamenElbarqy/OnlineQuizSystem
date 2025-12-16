@@ -1,0 +1,5 @@
+@baseUrl = http://localhost:5032
+@instructorId = 0AEB1616-3FF2-442E-9CD9-F0D67312DB7A
+
+### Get Instructor By Id
+GET {{baseUrl}}/api/instructors/{{instructorId}}

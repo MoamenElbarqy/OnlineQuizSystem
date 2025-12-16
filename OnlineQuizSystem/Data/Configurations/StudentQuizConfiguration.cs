@@ -4,7 +4,7 @@ using OnlineQuizSystem.Models;
 
 namespace OnlineQuizSystem.Data.Configurations;
 
-public class SolvedQuizConfiguration : IEntityTypeConfiguration<StudentQuiz>
+public class StudentQuizConfiguration : IEntityTypeConfiguration<StudentQuiz>
 {
     public void Configure(EntityTypeBuilder<StudentQuiz> builder)
     {
@@ -21,10 +21,6 @@ public class SolvedQuizConfiguration : IEntityTypeConfiguration<StudentQuiz>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(q => q.SolvedQuestions)
-            .WithOne(solvedQuestion => solvedQuestion.StudentQuiz);
-        
-        builder.Property(q => q.StartedAt).IsRequired();
-        
-        
+            .WithOne(solvedQuestion => solvedQuestion.StudentQuiz);      
     }
 }

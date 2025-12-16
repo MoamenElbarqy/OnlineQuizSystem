@@ -10,9 +10,6 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
     {
         builder.ToTable("Questions");
 
-
-        builder.HasKey(q => q.Id);
-
         builder.HasOne(q => q.Quiz)
             .WithMany(q => q.Questions)
             .HasForeignKey(q => q.QuizId);

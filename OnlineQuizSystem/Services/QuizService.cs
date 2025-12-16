@@ -15,8 +15,6 @@ public class QuizService(IUserService userService, AppDbContext dbContext) : IQu
         if (instructor is null)
             throw new Exception("Instructor not found");
 
-        instructor = (Instructor)instructor;
-
         return instructor;
     }
     public async Task<Quiz?> CreateQuizAsync(CreateQuizRequest request, Guid instructorId)

@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:5032
+
+@accessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIxNWYzYTRkMy1mNGI0LTRkZWItODk1Yy1lNmZmYjE0ZmUwNTEiLCJyb2xlIjoiU3R1ZGVudCIsIm5iZiI6MTc2NTkwMzY4NiwiZXhwIjoxNzY1OTAzODY2LCJpYXQiOjE3NjU5MDM2ODYsImlzcyI6ImxvY2FsaG9zdCIsImF1ZCI6ImxvY2FsaG9zdCJ9.ZX9QDgNryleoMilVtR8Aznpo_Unj7-GhjcEPqIjjpsc
+
+GET {{baseUrl}}/api/students/hello
+Authorization: Bearer {{accessToken}}

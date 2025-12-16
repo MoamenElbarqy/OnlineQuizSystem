@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:5032
+
+### Student Login
+
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "moamen@gmail.com",
+  "password": "P@ssw0rd",
+  "role": "Student"
+}

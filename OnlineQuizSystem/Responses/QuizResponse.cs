@@ -11,7 +11,7 @@ public class QuizResponse
     public int TotalPoints { get; private set; }
     public DateTime StartAt { get; private set; }
     public DateTime EndAt { get; private set; }
-    public string Status { get; private set; }
+    public QuizStatus Status { get; private set; }
 
     public List<QuestionResponse> Questions { get; private set; } = new();
     public static QuizResponse From(Quiz quiz)
@@ -24,7 +24,7 @@ public class QuizResponse
             TotalPoints = quiz.TotalPoints,
             StartAt = quiz.StartAt,
             EndAt = quiz.EndAt,
-            Status = quiz.Status.ToString(),
+            Status = quiz.Status,
             Questions = quiz.Questions.Select(QuestionResponse.From).ToList()
         };
     }
